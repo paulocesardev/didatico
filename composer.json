@@ -1,0 +1,22 @@
+{
+    "name": "paulo/didatico",
+    "description": "Projeto Didático",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Paulo Cesar",
+            "email": "paulocesardev.com@gmail.com"
+        }
+    ],
+    "require": {},
+    "scripts": {
+        "post-create-project-cmd": [
+            "@php -r \"file_exists('app/Config/database.php') || copy('app/Config/database_example.php', 'app/Config/database.php');\""
+        ]
+    }
+}
