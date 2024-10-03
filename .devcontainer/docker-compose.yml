@@ -1,0 +1,13 @@
+services:
+  app-didatico:
+    build:
+        context: ./
+        args:
+            MAIN_USERNNAME: ${USER}
+            MAIN_UID: "1000"
+    volumes:
+        - ../:/var/www/
+        - ../public/:/var/www/html/
+        - ./dev.ini:/usr/local/etc/php/conf.d/development.ini
+    ports:
+        - "80:80"
