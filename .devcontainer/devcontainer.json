@@ -4,7 +4,7 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app-didatico",
 	"workspaceFolder": "/var/www/",
-	"initializeCommand": "bash -c '[[ $(docker ps -aq --filter expose=80) ]] && docker stop $(docker ps -aq --filter expose=80) || echo \"\"'",
+	"initializeCommand": "./.devcontainer/initializeCommand.sh",
 	"containerEnv": {
 		"HTTP_PROXY": "${localEnv:HTTP_PROXY}",
 		"HTTPS_PROXY": "${localEnv:HTTP_PROXY}",

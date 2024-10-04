@@ -28,5 +28,4 @@ empty(strpos($file, '.php')) && $file .= '.php';
 
 App\Models\Base::initializeDB();
 
-echo ucfirst($file);
 include realpath(__DIR__ . '/../app/Controllers') . '/' . ucfirst($file);

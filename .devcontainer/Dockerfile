@@ -37,4 +37,6 @@ RUN curl  -L getcomposer.org/download/latest-stable/composer.phar -o composer.ph
 RUN mv composer.phar /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
 
+RUN  apt-get install -y git
+
 EXPOSE 80

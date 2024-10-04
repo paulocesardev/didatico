@@ -6,8 +6,8 @@ return
             'host' => 'localhost',
             'port' => '5432',
             'dbname' => '',
-            'user' => '',
-            'password' => '',
+            'user' => 'postgres',
+            'password' => 'postgres',
         ],
         'mysql' => [
             'host' => '',

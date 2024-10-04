@@ -1,13 +1,31 @@
 services:
-  app-didatico:
-    build:
-        context: ./
-        args:
-            MAIN_USERNNAME: ${USER}
-            MAIN_UID: "1000"
-    volumes:
-        - ../:/var/www/
-        - ../public/:/var/www/html/
-        - ./dev.ini:/usr/local/etc/php/conf.d/development.ini
-    ports:
-        - "80:80"
+    app-didatico:
+        build:
+            context: ./
+            args:
+                MAIN_USERNNAME: ${USER}
+                MAIN_UID: "1000"
+        volumes:
+            - ../:/var/www/
+            - ../public/:/var/www/html/
+            - ./dev.ini:/usr/local/etc/php/conf.d/development.ini
+        ports:
+            - "80:80"            
+    postgres:
+        image: postgres
+        command: [
+            "postgres", "-c","logging_collector=on" ,
+            "-c", "log_destination=stderr", 
+            "-c", "log_min_error_statement=error", 
+            # "-c", "log_filename=postgresql-14-main.log",
+            "-c", "log_file_mode=0777",
+            "-c", "datestyle=iso, dmy",
+            # "-c", "timezone=America/Sao_Paulo",
+        ]
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        volumes:
+           - ${HOME}/postgresql/didatico:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
