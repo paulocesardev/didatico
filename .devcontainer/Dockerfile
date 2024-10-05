@@ -2,6 +2,8 @@ FROM php:7.2-apache
 
 ARG	MAIN_USERNNAME
 ARG	MAIN_UID
+ARG APACHE_DOCUMENT_ROOT
+ENV APACHE_DOCUMENT_ROOT "${APACHE_DOCUMENT_ROOT}"
 
 RUN apt-get update && apt-get install -y \
 		libfreetype6-dev \
@@ -38,5 +40,7 @@ RUN mv composer.phar /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
 
 RUN  apt-get install -y git
+
+RUN if [ -n "${APACHE_DOCUMENT_ROOT}" ] ; then sed -i -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!" /etc/apache2/sites-available/*.conf ; fi
 
 EXPOSE 80
