@@ -5,9 +5,10 @@ services:
             args:
                 MAIN_USERNNAME: ${USER}
                 MAIN_UID: "1000"
+                APACHE_DOCUMENT_ROOT: "/var/www/public/"
         volumes:
             - ../:/var/www/
-            - ../public/:/var/www/html/
+            - ../public/:/var/www/public/
             - ./dev.ini:/usr/local/etc/php/conf.d/development.ini
         ports:
             - "80:80"            
