@@ -11,7 +11,6 @@ include_once realpath(__DIR__ . '/../vendor') . '/autoload.php';
 define('PATH_APP', realpath(__DIR__ . '/../app') . '/');
 define('PATH_VIEW', PATH_APP . 'Views/');
 
-echo '<pre>';
 $r = dirname($_SERVER['SCRIPT_NAME']);
 if ($r == '/') {
     $dir = explode('?', $_SERVER['REQUEST_URI'])[0];

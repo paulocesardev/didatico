@@ -51,6 +51,22 @@ abstract class Base
         return $this->table;
     }
 
+    protected function  prepareWhere($where, &$params)
+    {
+        $query = '';
+        if (is_numeric($where)) {
+            $query .= ' WHERE ' . $this->primaryKey . ' = ?';
+            $params[] = $where;
+        } elseif (is_array($where)) {
+            $query .= ' WHERE ' . implode(' = ? , ', array_keys($where)) . '  = ?';
+            array_push($params, ...array_values($where));
+        } else {
+            $query .= ' WHERE ' . $where;
+        }
+
+        return $query;
+    }
+
     function insert(array $data)
     {
         $query  = 'INSERT INTO ' . $this->table;
@@ -65,15 +81,7 @@ abstract class Base
         $params =  array_values($data);
         $query = 'UPDATE ' . $this->table . ' SET ';
         $query .= implode(' = ? , ', array_keys($data)) . '  = ?';
-        if (is_numeric($where)) {
-            $query .= ' WHERE ' . $this->primaryKey . ' = ?';
-            $params[] = $where;
-        } elseif (is_array($where)) {
-            $query .= ' WHERE ' . implode(' = ? , ', array_keys($where)) . '  = ?';
-            array_push($params, ...array_values($where));
-        } else {
-            $query .= ' WHERE ' . $where;
-        }
+        $query .= $this->prepareWhere($where, $params);
         return static::$DB->prepare($query)->execute($params);
     }
 
@@ -86,5 +94,13 @@ abstract class Base
         }
 
         return $this->insert($data);
+    }
+
+    function delete($where)
+    {
+        $params =  [];
+        $query = 'DELETE FROM ' . $this->table . ' ';
+        $query .= $this->prepareWhere($where, $params);
+        return static::$DB->prepare($query)->execute($params);
     }
 }
